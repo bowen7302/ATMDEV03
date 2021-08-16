@@ -1,0 +1,20 @@
+LOAD DATA
+--INFILE *
+INSERT INTO TABLE swgcnv.SWGCNV_DD_SPECIAL_PRICE 
+--  APPEND FIELDS TERMINATED BY '|' OPTIONALLY ENCLOSED BY '"' 
+REPLACE FIELDS TERMINATED BY '|' OPTIONALLY ENCLOSED BY '"' 
+TRAILING NULLCOLS 
+(
+  CUSTOMER_NUMBER               "Ltrim(Rtrim(LPAD(:CUSTOMER_NUMBER, 8, '0')))"
+ ,DELIVERY_LOCATION_NUMBER	"NVL(Ltrim(Rtrim(LPAD(:DELIVERY_LOCATION_NUMBER, 8, '0'))),'1')"
+ ,ITEM_CODE                     "NVL(upper(Ltrim(Rtrim(:ITEM_CODE), '0')),'~')"
+ ,STANDARD_PRICE                "Ltrim(Rtrim(:STANDARD_PRICE))" 
+ ,SPECIAL_PRICE                 "Ltrim(Rtrim(:SPECIAL_PRICE))" 
+ ,SALES_CENTER                  "NVL(Ltrim(Rtrim(:SALES_CENTER)),'XXX')"
+ ,DIVISION                      "nvl(Ltrim(Rtrim(:DIVISION)), '3171')"
+ ,VALID_FROM_DATE		"TO_DATE(LTRIM(RTRIM(:VALID_FROM_DATE)),'MM/DD/YY')"
+ ,VALID_TO_DATE                 "TO_DATE(LTRIM(RTRIM(:VALID_TO_DATE)),'MM/DD/YY')"
+ ,UOM_CODE                      "LTRIM(RTRIM(:UOM_CODE))"                     
+ ,VALID_FLAG                    CONSTANT 'N'
+ --,LEGACY_SYSTEM_CODE             CONSTANT 'WTRFLX2'
+)
